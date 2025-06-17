@@ -64,6 +64,11 @@ var interfaceConfig = {
 
     FILM_STRIP_MAX_HEIGHT: 120,
 
+    // Browsers that we would like to force, regardless of their WebRTC support,
+    // and that should not show the unsupported browser page.
+    // UNSUPPORTED_BROWSERS has preference over this.
+    FORCED_BROWSERS: [],
+
     GENERATE_ROOMNAMES_ON_WELCOME_PAGE: true,
 
     /**

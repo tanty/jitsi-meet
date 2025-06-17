@@ -16,6 +16,8 @@ const DEFAULT_OPTIMAL_BROWSERS = [
 
 const DEFAULT_UNSUPPORTED_BROWSERS: string[] = [];
 
+const DEFAULT_FORCED_BROWSERS: string[] = [];
+
 const browserNameToCheck = {
     chrome: browser.isChrome.bind(browser),
     chromium: browser.isChromiumBased.bind(browser),
@@ -83,11 +85,18 @@ export function isSupportedBrowser() {
         return false;
     }
 
-    // Blacklists apply to desktop browsers only right now.
-    if (!isMobileBrowser() && _isCurrentBrowserInList(
-        interfaceConfig.UNSUPPORTED_BROWSERS || DEFAULT_UNSUPPORTED_BROWSERS
-    )) {
-        return false;
+    // Block/Allowlists apply to desktop browsers only right now.
+    if !isMobileBrowser() {
+        if _isCurrentBrowserInList(
+            interfaceConfig.UNSUPPORTED_BROWSERS || DEFAULT_UNSUPPORTED_BROWSERS
+        ) {
+            return false;
+        }
+        if _isCurrentBrowserInList(
+            interfaceConfig.FORCED_BROWSERS || DEFAULT_FORCED_BROWSERS
+        ) {
+            return true;
+        }
     }
 
     return isMobileBrowser() ? isSupportedMobileBrowser() : JitsiMeetJS.isWebRtcSupported();
